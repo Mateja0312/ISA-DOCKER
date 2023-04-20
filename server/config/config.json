@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "LOZINKA",
+    "database": "ISA2022",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "LOZINKA",
+    "database": "ISA2022",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "LOZINKA",
+    "database": "ISA2022",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
