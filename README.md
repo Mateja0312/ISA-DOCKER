@@ -19,7 +19,7 @@ Ports 8080 and 8081 should be free before starting the application, as frontend 
 NOTE: Running the 'npm run serve' command inside the 'server' folder for the first time will generate the required tables in the database
 
 #### Database seeding:
-7. Use 'npx sequelize-cli db:seed:all' inside the 'server' folder to seed the database
+7. Use 'npx sequelize-cli db:seed:all --config "config/config.json" --env "production"' inside the 'server' folder to seed the database
 
 #### Application: 
 8. App should be running on: http://localhost:8080

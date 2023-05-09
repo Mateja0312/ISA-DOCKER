@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    volumes:
+      - app_data:/var/lib/mysql
 
   mysql_server:
     image: mysql:8.0
@@ -22,7 +24,9 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
-      retries: 50
+      retries: 20
+    volumes:
+      - app_data:/var/lib/mysql
     # The above healthcheck configuration defines a test that verifies that the MySQL database is fully initialized and ready to accept connections.
 
   app:
@@ -35,3 +39,6 @@ services:
       mysql_server:
         condition: service_healthy
     # The above depends_on configuration specifies that the app container should only start when the MySQL container is healthy.
+  
+volumes:
+  app_data:
