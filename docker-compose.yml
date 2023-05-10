@@ -24,7 +24,7 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
-      retries: 20
+      retries: 30
     volumes:
       - app_data:/var/lib/mysql
     # The above healthcheck configuration defines a test that verifies that the MySQL database is fully initialized and ready to accept connections.
@@ -39,6 +39,13 @@ services:
       mysql_server:
         condition: service_healthy
     # The above depends_on configuration specifies that the app container should only start when the MySQL container is healthy.
+  
+  mailcatcher:
+    restart: on-failure
+    image: dockage/mailcatcher:0.8.2
+    ports:
+    - "1080:1080" # access mailcatcher on localhost:1080
+    - "1025:1025" # catching packages on port 1025
   
 volumes:
   app_data:
