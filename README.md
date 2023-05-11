@@ -19,10 +19,10 @@ The 4th container, ***mailcatcher*** is used to catch emails which are sent when
 2. Seed the database by running 'npx sequelize-cli db:seed:all --config "config/config.json" --env "production"' from the 'isa-docker-app' container
 
 #### Application:
-    App should be running on: http://localhost:8080
-    Login credentials for every seeded user:  
-        username: <users_role>@gmail.com, e.g. client@gmail.com  
-        password: 123
+App should be running on: http://localhost:8080
+Login credentials for every seeded user:  
+- username: <users_role>@gmail.com, e.g. client@gmail.com  
+- password: 123
 
 #### Email:
-    To send emails, configure an SMTP server and enter its credentials into .env
+- To send emails, configure an SMTP server and enter its credentials into .env
