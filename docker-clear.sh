@@ -1,7 +1,7 @@
-# Clear all containers, images, volumes and cache used in 'docker compose up'
+# Clear all containers, images, volumes and build cache
 
 docker compose down;
-docker volume rm isa-docker_app_data;
+docker volume rm $(docker volume ls -q);
 docker rmi $(docker image ls -q);
 docker builder prune -f;
 echo "=========================================================";
