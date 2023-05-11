@@ -1,8 +1,13 @@
-# ISA-22-23 DOCKER
+# ISA-DOCKER
+
+### ABOUT THIS REPO
+
+This project is derived from ISA-22-23. ISA-22-23 is a single page web application developed using vue, node, express and a mysql database.
+The purpouse of ISA-DOCKER is to utilize dockers virtualization in order to eliminate the mundane configuration tasks as well as make any future development easier, faster and portable.
 
 ### IMPORTANT NOTES
 
-It is only required to have Docker installed on your machine for this app to run.
+It is required to install Docker in order to run this project.
 
 Application is using 3 main containers:
 - ***cli*** - frontend container (_localhost:8080_)
