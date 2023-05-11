@@ -2,7 +2,8 @@
 
 ### ABOUT THIS REPO
 
-This project is derived from ISA-22-23. ISA-22-23 is a single page web application developed using vue, node, express and a mysql database.
+This project is derived from ISA-22-23.   
+ISA-22-23 is a single page web application developed using vue, node, express and a mysql database.
 The purpouse of ISA-DOCKER is to utilize dockers virtualization in order to eliminate the mundane configuration tasks as well as make any future development easier, faster and portable.
 
 ### IMPORTANT NOTES
@@ -14,7 +15,7 @@ Application is using 3 main containers:
 - ***app*** - backend container (_localhost:8081_)
 - ***mysql_server*** - database (_localhost:3306_)
 
-The 4th container, ***mailcatcher*** is used to catch emails which are sent when a new registration is attempted. The email contains a link for account activation. It can be accessed at _localhost:1080_
+The 4th container, ***mailcatcher*** is used to catch emails which are sent when a new registration is attempted. The email contains a link for account activation.   It can be accessed at _localhost:1080_
 
 **Please check the availability of specified the ports before running the application.**
 
