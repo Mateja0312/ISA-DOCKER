@@ -17,7 +17,7 @@ Application is using 3 main containers:
 
 The 4th container, ***mailcatcher*** is used to catch emails which are sent when a new registration is attempted. The email contains a link for account activation.   It can be accessed at _localhost:1080_
 
-**Please check the availability of specified the ports before running the application.**
+**Please check the availability of the specified ports before running the application.**
 
 ### Setup guide:
 
