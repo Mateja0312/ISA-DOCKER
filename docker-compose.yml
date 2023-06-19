@@ -14,10 +14,12 @@ services:
   mysql_server:
     image: mysql:8.0
     environment:
-      - MYSQL_DATABASE=ISA2022
-      # - MYSQL_USER=root
-      # - MYSQL_PASSWORD=LOZINKA
-      - MYSQL_ROOT_PASSWORD=LOZINKA
+      - MYSQL_DATABASE=ISA2022 #$${DB_NAME} #
+      # - MYSQL_USER=$${DB_USERNAME}
+      # - MYSQL_PASSWORD=$${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=LOZINKA #$${DB_PASSWORD} #
+    env_file:
+      - ./server/.env
     ports:
       - 3306:3306
     healthcheck:

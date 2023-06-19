@@ -4,7 +4,7 @@ let transporter: any;
 
 try {
   transporter =  nodemailer.createTransport({
-    host: 'mailcatcher', // process.env.SMTP_HOST
+    host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT, 10), 
     auth: {
       user: process.env.SMTP_USERNAME,

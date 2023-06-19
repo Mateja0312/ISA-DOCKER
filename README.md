@@ -20,9 +20,11 @@ The 4th container, ***mailcatcher*** is used to catch emails which are sent when
 **Please check the availability of the specified ports before running the application.**
 
 ### Setup guide:
-
-1. Inside the main project directory run: 'docker compose up'. This command will create the required images and run containers.
-2. Seed the database by running 'npx sequelize-cli db:seed:all --config "config/config.json" --env "production"' from the 'isa-docker-app' container
+1. Add the .env file by copying the .env.example and setting all the parameters (SMTP_USERNAME and SMTP_PASSWORD not required if using mailcatcher).
+    - **IMPORTANT**: Make sure the DB_HOST and SMTP_HOST are set as the names of the containers containing the database and the mailcatcher.
+2. Add a folder named 'qrcodes' in the 'server' folder.
+3. Inside the main project directory run: 'docker compose up'. This command will create the required images and run containers.
+4. Seed the database by running 'npx sequelize-cli db:seed:all --config "config/config.json" --env "production"' from the 'isa-docker-app' container
 
 #### Application:
 App should be running on: http://localhost:8080
