@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+
+  cli:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    ports:
+      - 9090:9090
+
+  app:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    ports:
+      - 9091:9091
