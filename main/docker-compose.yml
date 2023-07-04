@@ -38,6 +38,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8081
+      - 3000:3000 #required for qrcodes to work
     depends_on:
       mysql_server:
         condition: service_healthy
