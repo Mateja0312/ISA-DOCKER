@@ -9,7 +9,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - app_data:/var/lib/mysql
+      - app_qrcodes:/app/server/qrcodes
     networks:
       - my-bridge
 
@@ -47,6 +47,9 @@ services:
       mysql_server:
         condition: service_healthy
     # The above depends_on configuration specifies that the app container should only start when the MySQL container is healthy.
+    volumes:
+      - app_data:/var/lib/mysql
+      - app_qrcodes:/app/server/qrcodes
     networks:
       - my-bridge
 
@@ -61,6 +64,7 @@ services:
 
 volumes:
   app_data:
+  app_qrcodes:
 
 networks:
   my-bridge:
