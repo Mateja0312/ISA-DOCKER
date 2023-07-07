@@ -11,14 +11,11 @@ export const apitest = Router();
 const secretKey = 'my-32-character-ultra-secure-and-ultra-long-secret';
 
 const authenticate = (req: any, res: any, next: any) => {
-  const authHeader = req.headers.Authorization;
-  console.log('pre provere tokena');
+  const token = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!token) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-
-  const token = authHeader.split(' ')[1];
 
   console.log('pre try/catch bloka');
   try {
@@ -36,7 +33,7 @@ const authenticate = (req: any, res: any, next: any) => {
   }
 };
 
-apitest.get('/data', (req, res) => {
+apitest.get('/data', authenticate, (req, res) => {
     console.log('usao u data');
     // const data = { message: 'STIGLO iz Glavne u Agentsku'};
     res.json('PORUKA');

@@ -17,21 +17,22 @@ const generateToken = () => {
   return jwt.sign(payload, secretKey);
 };
 
-axios.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  console.log(config)
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+// Api request interceptor
+// axios.interceptors.request.use(function (config) {
+//   // Do something before request is sent
+//   console.log(config)
+//   return config;
+// }, function (error) {
+//   // Do something with request error
+//   return Promise.reject(error);
+// });
 
 app.get('/apitest', async (req, res) => {
   try {
     const token = generateToken();
     const response = await axios.get('http://app:8081/apitest/data', {
       headers: {
-        Authorization: token,
+        authorization: token,
       },
     });
     const data = response.data;
