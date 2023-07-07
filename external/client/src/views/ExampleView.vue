@@ -2,6 +2,7 @@
     <div>
       <h1>Example Component</h1>
       <button @click="getData">Fetch Data from Backend</button>
+      <button @click="apiTest">Testiraj povezanost sa Glavnom aplikacijom</button>
       <p>{{ responseData }}</p>
     </div>
   </template>
@@ -19,6 +20,14 @@
       async getData() {
         try {
           const response = await axios.get('http://localhost:9091/data'); // Replace with your backend URL
+          this.responseData = response.data;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      async apiTest() {
+        try {
+          const response = await axios.get('http://localhost:9091/apitest'); // Replace with your backend URL
           this.responseData = response.data;
         } catch (error) {
           console.error(error);

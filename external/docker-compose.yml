@@ -2,16 +2,24 @@ version: "3.9"
 
 services:
 
-  cli:
+  cli2:
     build:
       context: client
       dockerfile: Dockerfile
     ports:
       - 9090:9090
+    networks:
+      - main_my-bridge
 
-  app:
+  app2:
     build:
       context: server
       dockerfile: Dockerfile
     ports:
       - 9091:9091
+    networks:
+      - main_my-bridge
+
+networks:
+  main_my-bridge:
+    external: true

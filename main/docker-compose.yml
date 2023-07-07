@@ -10,6 +10,8 @@ services:
       - 8080:8080
     volumes:
       - app_data:/var/lib/mysql
+    networks:
+      - my-bridge
 
   mysql_server:
     image: mysql:8.0
@@ -31,6 +33,8 @@ services:
     volumes:
       - app_data:/var/lib/mysql
     # The above healthcheck configuration defines a test that verifies that the MySQL database is fully initialized and ready to accept connections.
+    networks:
+      - my-bridge
 
   app:
     build:
@@ -43,13 +47,21 @@ services:
       mysql_server:
         condition: service_healthy
     # The above depends_on configuration specifies that the app container should only start when the MySQL container is healthy.
-  
+    networks:
+      - my-bridge
+
   mailcatcher:
     restart: on-failure
     image: dockage/mailcatcher:0.8.2
     ports:
     - "1080:1080" # access mailcatcher on localhost:1080
     - "1025:1025" # catching packages on port 1025
-  
+    networks:
+      - my-bridge
+
 volumes:
   app_data:
+
+networks:
+  my-bridge:
+    driver: bridge

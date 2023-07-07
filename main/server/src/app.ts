@@ -8,6 +8,7 @@ import { account } from '../routes/account';
 import { center } from '../routes/center';
 import { feedback } from '../routes/feedback';
 import { appointment } from '../routes/appointment';
+import { apitest } from '../routes/apitest';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/account', account)
 app.use('/center', center)
 app.use('/feedback', feedback)
 app.use('/appointment', appointment)
+app.use('/apitest', apitest)
 
 app.get("/", (req, response) => {
     response.send("Hello world!");
