@@ -14,25 +14,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const axios_1 = __importDefault(require("axios"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const consumer_token_1 = require("../services/consumer-token");
 const app = (0, express_1.default)();
 const PORT = 9091;
 const cors = require('cors');
-const secretKey = 'my-32-character-ultra-secure-and-ultra-long-secret';
 app.use(cors({ origin: 'http://localhost:9090' }));
-const generateToken = () => {
-    const payload = {
-        appId: 'agentska-aplikacija',
-    };
-    return jsonwebtoken_1.default.sign(payload, secretKey);
-};
+// Api request interceptor
+// axios.interceptors.request.use(function (config) {
+//   // Do something before request is sent
+//   console.log(config)
+//   return config;
+// }, function (error) {
+//   // Do something with request error
+//   return Promise.reject(error);
+// });
 app.get('/apitest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = generateToken();
-        console.log("PRIKAZ TOKENA: ", token);
-        const response = yield axios_1.default.get('http://localhost:8081/apitest/data', {
+        const token = (0, consumer_token_1.generateToken)();
+        console.log("SADRZAJ TOKENA: ", token);
+        const response = yield axios_1.default.get('http://app:8081/apitest/data', {
             headers: {
-                Authorization: token,
+                authorization: token,
             },
         });
         const data = response.data;

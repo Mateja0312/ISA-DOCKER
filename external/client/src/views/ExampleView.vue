@@ -19,7 +19,7 @@
     methods: {
       async getData() {
         try {
-          const response = await axios.get('http://localhost:9091/data'); // Replace with your backend URL
+          const response = await axios.get('http://localhost:9091/data');
           this.responseData = response.data;
         } catch (error) {
           console.error(error);
@@ -27,7 +27,7 @@
       },
       async apiTest() {
         try {
-          const response = await axios.get('http://localhost:9091/apitest'); // Replace with your backend URL
+          const response = await axios.get('http://localhost:9091/apitest');
           this.responseData = response.data;
         } catch (error) {
           console.error(error);
