@@ -4,7 +4,7 @@ interface DecodedToken extends JwtPayload {
     appId: string;
 }
 
-const allowedApps: string[] = ['agentska-aplikacija'];
+const allowedApps: string[] = ['agentska-aplikacija', 'glavni-frontend'];
 
 const secretKey = process.env.JWT_SECRET as string;
 

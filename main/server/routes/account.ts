@@ -5,6 +5,7 @@ import {Router} from 'express';
 import {User} from '../models/User'
 import { sendEmail } from '../services/email';
 import { isPenalized } from './appointment';
+import { authenticate } from '../services/auth-consumer';
 
 export const account = Router();
 
@@ -64,6 +65,10 @@ account.get("/activate/:token", async (req, res) => {
 account.post("/login", async (req, res) => {
     const { email, password } = req.body;
   
+    console.log("PRIKAZ REQUEST BODY-a: ", req.body);
+
+    console.log("USAO U GLAVNU APP, prikaz da li je email i pass prosledjen: ", email, password);
+
     User.findOne({ where: { email } })
       .then(async (user: any) => {
         if (!user) {

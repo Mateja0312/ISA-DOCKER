@@ -7,6 +7,7 @@ const PORT = 9091;
 const cors = require('cors');
 
 app.use(cors({ origin: 'http://localhost:9090' }))
+app.use(express.json());
 
 // Api request interceptor
 // axios.interceptors.request.use(function (config) {
@@ -32,6 +33,23 @@ app.get('/apitest', async (req, res) => {
     res.json(data);
   } catch (error) {
     res.status(500).json({ error });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try{
+    console.log("usao u try");
+    console.log("PRIKAZ REQUEST-a: ", req.body);
+    const token = generateToken();
+    console.log("generisao token, sadrzaj: ", token);
+    const response = await axios.post('http://app:8081/account/login',{
+      email: req.body.email,
+      password: req.body.password,
+    });
+    console.log("PRIKAZE RESPONSE-a: ", response.data);
+    res.json(response);
+  } catch (error){
+    res.json({error});
   }
 });
 
