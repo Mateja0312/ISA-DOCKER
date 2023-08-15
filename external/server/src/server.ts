@@ -1,6 +1,8 @@
+import jwt from 'jsonwebtoken';
 import express, { Request, Response } from 'express';
 import axios from 'axios';
 import {generateToken} from "../services/consumer-token";
+//import {User} from '../models/User'
 
 const app = express();
 const PORT = 9091;
@@ -38,18 +40,17 @@ app.get('/apitest', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   try{
-    console.log("usao u try");
-    console.log("PRIKAZ REQUEST-a: ", req.body);
-    const token = generateToken();
-    console.log("generisao token, sadrzaj: ", token);
+    const authToken = generateToken();
     const response = await axios.post('http://app:8081/account/login',{
       email: req.body.email,
       password: req.body.password,
     });
-    console.log("PRIKAZE RESPONSE-a: ", response.data);
-    res.json(response);
+
+    res.cookie("token", response.data.token, { httpOnly: true });
+    res.json(response.data);
+
   } catch (error){
-    res.json({error});
+    res.json(error);
   }
 });
 

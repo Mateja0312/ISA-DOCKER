@@ -23,7 +23,7 @@ export default ({
   methods: {
     async login() {
       const res = await login({ email: this.email, password: this.password });
-      //const res = await axios.post('http://localhost:9091/login', { email: this.email, password: this.password });
+      // const res = await axios.post('http://localhost:9091/login', { email: this.email, password: this.password });
 
       this.$store.commit("setToken", res.data.token);
       this.$store.commit("setUser", res.data.user);

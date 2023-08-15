@@ -64,10 +64,6 @@ account.get("/activate/:token", async (req, res) => {
 
 account.post("/login", async (req, res) => {
     const { email, password } = req.body;
-  
-    console.log("PRIKAZ REQUEST BODY-a: ", req.body);
-
-    console.log("USAO U GLAVNU APP, prikaz da li je email i pass prosledjen: ", email, password);
 
     User.findOne({ where: { email } })
       .then(async (user: any) => {
@@ -92,6 +88,7 @@ account.post("/login", async (req, res) => {
         });
   
         res.cookie("token", token, { httpOnly: true });
+        
         res.json({ token, user });
       })
       .catch((error: any) => {
