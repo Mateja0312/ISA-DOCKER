@@ -27,7 +27,8 @@ export default ({
 
       this.$store.commit("setToken", res.data.token);
       this.$store.commit("setUser", res.data.user);
-      this.$router.push("/");
+      this.$router.push("/home-page");
+      console.log("Uloga: ", this.$store.getters.userRole)
     },
   },
 });
