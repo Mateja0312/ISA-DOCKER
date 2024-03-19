@@ -5,6 +5,7 @@ import { Op } from 'sequelize';
 import { Rating } from '../models/Rating'
 import { Appointment, AppointmentStatus } from '../models/Appointment';
 import { User } from '../models/User';
+import { authenticate } from '../services/auth-consumer';
 
 export const center = Router();
 
@@ -55,7 +56,7 @@ async function isTimeslotFree(center_id: number, client_id: number, start: strin
     return true;
 }
 
-center.get("/list", async (req, res) => {
+center.get("/list", authenticate, async (req, res) => {
     const { name, address, rating, datetime, token } = req.query;
     const id = token ? (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number })['id'] : null;
   
@@ -103,7 +104,7 @@ center.get("/list", async (req, res) => {
     }
 });
 
-center.get("/:id", async (req, res) => {
+center.get("/:id", authenticate, async (req, res) => {
     const { id } = req.params;
     const { token } = req.query;
 

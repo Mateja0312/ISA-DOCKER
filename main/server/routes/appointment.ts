@@ -9,6 +9,7 @@ import path from 'path';
 import qrcode from 'qrcode';
 import nodemailer from 'nodemailer';
 import { sendEmail } from '../services/email';
+import { authenticate } from '../services/auth-consumer';
 
 export const appointment = Router();
 
@@ -151,7 +152,7 @@ function sendQRcode(appointment: any, email: string){
   });
 }
 
-appointment.get("/visits", async (req, res) => {
+appointment.get("/visits", authenticate, async (req, res) => {
   const { token } = req.query;
   const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
   let responses = await Appointment.findAll({
@@ -168,7 +169,7 @@ appointment.get("/visits", async (req, res) => {
   res.json(responses);
 });
 
-appointment.get("/:id", async (req, res) => {
+appointment.get("/:id", authenticate, async (req, res) => {
   const { token } = req.query;
   const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -185,7 +186,7 @@ appointment.get("/:id", async (req, res) => {
   res.json(appointment);
 });
 
-appointment.post("", async(req, res) => {
+appointment.post("", authenticate, async(req, res) => {
   const newAppointment = req.body;
   const sender = jwt.verify(newAppointment.token, process.env.JWT_SECRET as string) as User;
   const { id, role, employedAt } = sender;
@@ -247,7 +248,7 @@ appointment.post("", async(req, res) => {
   
 });
 
-appointment.post("/:id", async(req, res) => {
+appointment.post("/:id", authenticate, async(req, res) => {
   const id = req.params.id;
   const { token } = req.query;
   const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
@@ -285,7 +286,7 @@ appointment.post("/:id", async(req, res) => {
   })
 });
 
-appointment.delete("/:id", async(req, res) => {
+appointment.delete("/:id", authenticate, async(req, res) => {
   const { id } = req.params;
   const { token } = req.query;
   const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };

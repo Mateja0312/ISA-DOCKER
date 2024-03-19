@@ -15,16 +15,19 @@ app.get('/apitest', async (req, res) => {
   try {
     const token = generateToken();
     console.log("SADRZAJ TOKENA: ", token);
+    console.log("Provera integriteta 1");
     const response = await axios.get('http://app:8081/apitest/data', {
       headers: {
         authorization: token,
       },
     });
+    console.log("Provera integriteta 2");
     const data = response.data;
     console.log("PRIKAZ RESPONSA: ", response.data)
-    res.json(data);
+    res.json(response.data);
   } catch (error) {
     res.status(500).json({ error });
+    console.log("problemovi");
   }
 });
 
@@ -93,7 +96,7 @@ app.post("/feedback", async (req, res) => {
     const { token } = req.query;
 
     const { id } = jwt.verify(token as string, "my-32-character-ultra-secure-and-ultra-long-secret") as { id: number };
-    const authToken = generateToken(); // Assuming you have a generateToken function
+    const authToken = generateToken();
 
     const response = await axios.post('http://app:8081/feedback', data, {
       headers: {
@@ -115,7 +118,7 @@ app.get("/feedback/history", async (req, res) => {
   try {
     const { token } = req.query;
     const { id } = jwt.verify(token as string, "my-32-character-ultra-secure-and-ultra-long-secret") as { id: number };
-    const authToken = generateToken(); // Assuming you have a generateToken function
+    const authToken = generateToken();
 
     const responses = await axios.get('http://app:8081/feedback/history', {
       headers: {
@@ -135,7 +138,7 @@ app.get("/feedback/history", async (req, res) => {
 
 app.get("/feedback/:id", async (req, res) => {
   try {
-    const authToken = generateToken(); // Assuming you have a generateToken function
+    const authToken = generateToken();
     const feedbackId = req.params.id;
 
     const response = await axios.get(`http://app:8081/feedback/${feedbackId}`, {

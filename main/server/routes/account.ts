@@ -9,7 +9,9 @@ import { authenticate } from '../services/auth-consumer';
 
 export const account = Router();
 
-account.put("/profile", async(req, res) => {
+account.put("/profile", authenticate, async(req, res) => {
+  console.log("ALO BRE");
+  console.log("Sta se nalazi u req.headers na main backendu (API req za profil):", req.headers.authorization);
   User.update(req.body, {
     where: {
       id: req.body.id
@@ -49,7 +51,7 @@ account.post("/register", async (req, res) => {
     }
 });
 
-account.get("/activate/:token", async (req, res) => {
+account.get("/activate/:token", authenticate, async (req, res) => {
     const { token } = req.params;
     try {
       const { id } = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
@@ -64,7 +66,7 @@ account.get("/activate/:token", async (req, res) => {
 
 account.post("/login", async (req, res) => {
     const { email, password } = req.body;
-
+    //console.log("Sta se nalazi u req.headers na main backendu:", req.headers);
     User.findOne({ where: { email } })
       .then(async (user: any) => {
         if (!user) {

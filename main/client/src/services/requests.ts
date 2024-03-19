@@ -5,82 +5,118 @@ export async function register(newUser: any): Promise<any> {
 }
 
 export async function login(credentials: any): Promise<any> {
-  // const headers = {
-  //   'authorization': generateToken() //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImdsYXZuaS1mcm9udGVuZCIsImlhdCI6MTY5MTUwNzM3MX0.qZQbITu07WhOd25mEDGLpfDXj-_zh_Qy6Rj5ascP2DU agentska-aplikacija +++++ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImdsYXZuaS1mcm9udGVuZCIsImlhdCI6MTY5MTUwNzE1M30.PuwrmSOakBGiFmZQxDbJeEd4Dgfu6_PXFsiUqNltDHA glavni-frontend
-  // };
-  return api().post("account/login", credentials).then();
+  const headers = {
+    'authorization': generateToken()
+  };
+  return api().post("account/login", credentials, {headers}).then();
 }
 
 export async function getCenters(query: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("center/list", { params: query })
+    .get("center/list", { headers, params: query })
     .then((res) => res.data);
 }
 
 export async function getMyInteractions(token: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("feedback/interactions", { params: token })
+    .get("feedback/interactions", { headers, params: token })
     .then((res) => res.data);
 }
 
 export async function getAnswers(token: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("questionnaire", { params: token })
+    .get("questionnaire", { headers, params: token })
     .then((res) => res.data);
 }
 
 export async function questions(): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("questionnaire/questions")
+    .get("questionnaire/questions", {headers})
     .then((res) => res.data);
 }
 
 export async function getAllUsers(): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("users")
+    .get("users", {headers})
     .then((res) => res.data);
 }
 
 export async function getPendingFeedbacks(): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("feedback/waiting-response")
+    .get("feedback/waiting-response", {headers})
     .then((res) => res.data);
 }
 
 export async function getFeedbackById(id: number): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get(`feedback/${id}`)
+    .get(`feedback/${id}`, {headers})
     .then((res) => res.data);
 }
 
 export async function myResponseHistory(token: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("feedback/response-history", { params: token })
+    .get("feedback/response-history", { headers, params: token })
     .then((res) => res.data);
 }
 
 export async function getMyResponses(id: number): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get(`feedback/response/${id}`)
+    .get(`feedback/response/${id}`, {headers})
     .then((res) => res.data);
 }
 
 export async function myFeedbackHistory(token: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("feedback/history", { params: token })
+    .get("feedback/history", { headers, params: token })
     .then((res) => res.data);
 }
 
 export async function makeAppointment(appointment: any): Promise<any> {
-  return api().post("appointment", appointment).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  return api().post("appointment", appointment, {headers}).then();
 }
 
 export async function submitResponse(
   feedbackResponse: any,
   token: any
 ): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .post("feedback/response", feedbackResponse, { params: token })
+    .post("feedback/response", feedbackResponse, { headers, params: token })
     .then();
 }
 
@@ -88,8 +124,11 @@ export async function acceptAppointment(
   appointment: any,
   token: any
 ): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .post(`appointment/${appointment.id}`, appointment, { params: token })
+    .post(`appointment/${appointment.id}`, appointment, { headers, params: token })
     .then();
 }
 
@@ -97,48 +136,73 @@ export async function cancelAppointment(
   appointment: any,
   token: any
 ): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .delete(`appointment/${appointment.id}`, { params: token })
+    .delete(`appointment/${appointment.id}`, { headers, params: token })
     .then();
 }
 
 export async function updateClientInfo(clientInfo: any): Promise<any> {
-  return api().put("account/profile", clientInfo).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  //console.log("Integrity check 1");
+  return api().put("account/profile", clientInfo, {headers}).then();
 }
 
 export async function updateUserActivity(userInfo: any): Promise<any> {
-  return api().post("updateUserActivity", userInfo).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  return api().post("updateUserActivity", userInfo, {headers}).then();
 }
 
 export async function approve(newUser: any): Promise<any> {
-  return api().post("register", newUser).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  return api().post("register", newUser, {headers}).then();
 }
 
 export async function saveQuestionnaireInfo(
   newAnswers: any,
   token: any
 ): Promise<any> {
-  return api().post("questionnaire", newAnswers, { params: token }).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  return api().post("questionnaire", newAnswers, { headers, params: token }).then();
 }
 
 export async function submitFeedback(
   newFeedback: any,
   token: any
 ): Promise<any> {
-  return api().post("feedback", newFeedback, { params: token }).then();
+  const headers = {
+    authorization: generateToken()
+  };
+  return api().post("feedback", newFeedback, { headers, params: token }).then();
 }
 
 export async function getCenter(id: number, token: any): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get(`center/${id}`, { params: { token } })
+    .get(`center/${id}`, { headers, params: { token } })
     .then((res) => res.data);
 }
 
 export async function getCompletedAndPendingAppointments(
   token: any
 ): Promise<any> {
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get("appointment/visits", { params: token })
+    .get("appointment/visits", { headers, params: token })
     .then((res) => res.data);
 }
 
@@ -146,7 +210,10 @@ export async function getAppointment(
   appointmentId: number,
   token: any
 ): Promise<any>{
+  const headers = {
+    authorization: generateToken()
+  };
   return api()
-    .get(`appointment/${appointmentId}`, { params: { token } })
+    .get(`appointment/${appointmentId}`, { headers, params: { token } })
     .then((res) => res.data);
 }

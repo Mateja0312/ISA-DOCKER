@@ -5,10 +5,11 @@ import { FeedbackResponse } from '../models/FeedbackResponse';
 import { Feedback } from '../models/Feedback';
 import { User } from '../models/User';
 import { sendEmail } from '../services/email';
+import { authenticate } from '../services/auth-consumer';
 
 export const feedback = Router();
 
-feedback.get("/interactions", async (req, res) => {
+feedback.get("/interactions", authenticate, async (req, res) => {
     const { token } = req.query;
     const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
     try {
@@ -39,7 +40,7 @@ feedback.get("/interactions", async (req, res) => {
   
 });
 
-feedback.get("/response-history", async (req, res) => {
+feedback.get("/response-history", authenticate, async (req, res) => {
     const { token } = req.query;
     const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
     let responses = await FeedbackResponse.findAll({
@@ -51,7 +52,7 @@ feedback.get("/response-history", async (req, res) => {
     res.json(responses);
 });
 
-feedback.get("/waiting-response", async (req, res) => {
+feedback.get("/waiting-response", authenticate, async (req, res) => {
     let feedbackList : any = await Feedback.findAll({
       include: [FeedbackResponse],
     })
@@ -62,7 +63,7 @@ feedback.get("/waiting-response", async (req, res) => {
     res.json(feedbackList);
 });
 
-feedback.get("/response/:id", async (req, res) => {
+feedback.get("/response/:id", authenticate, async (req, res) => {
     let response: any = await FeedbackResponse.findOne({
       include: [Feedback],
       where: {
@@ -72,7 +73,7 @@ feedback.get("/response/:id", async (req, res) => {
     res.json(response);
 });
 
-feedback.get("/history", async (req, res) => {
+feedback.get("/history", authenticate, async (req, res) => {
     const { token } = req.query;
     const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -85,7 +86,7 @@ feedback.get("/history", async (req, res) => {
     res.json(myFeedbacks);
 });
 
-feedback.post("/response", async(req, res) => {
+feedback.post("/response", authenticate, async(req, res) => {
     const { token } = req.query;
     const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -123,7 +124,7 @@ feedback.post("/response", async(req, res) => {
     })
 });
 
-feedback.post("", async(req, res) => {
+feedback.post("", authenticate, async(req, res) => {
     const { token } = req.query;
     const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -144,7 +145,7 @@ feedback.post("", async(req, res) => {
     })
 });
 
-  feedback.get("/:id", async (req, res) => {
+  feedback.get("/:id", authenticate, async (req, res) => {
       let feedback = await Feedback.findOne({
         where: {
           id: req.params.id,
