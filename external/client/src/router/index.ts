@@ -33,6 +33,27 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home-page',
     component: HomePageView
   },
+  {
+    path: "/center-visits",
+    name: "CenterVisits",
+    component: () => import("../views/CenterVisits.vue"),
+  },
+  {
+    path: "/feedback",
+    name: "Feedback",
+    component: () => import("../views/FeedbackView.vue"),
+  },
+  {
+    path: "/feedback-history",
+    name: "FeedbackHistory",
+    component: () => import("../views/FeedbackHistory.vue"),
+  },
+  {
+    path: "/feedback-history/:id",
+    name: "MyFeedback",
+    component: () => import("../views/MyFeedback.vue"),
+    props: true,
+  },
 ]
 
 const router = createRouter({

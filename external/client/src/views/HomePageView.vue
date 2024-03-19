@@ -1,23 +1,36 @@
 <template>
-    <div>
-      <h1>Home Page</h1>
-      <!-- <button @click="getData">Fetch Data from Backend</button>
-      <button @click="apiTest">Testiraj povezanost sa Glavnom aplikacijom</button>
-      <p>{{ responseData }}</p> -->
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        responseData: '',
-      };
-    },
-    methods: {
-     
-    },
-  };
-  </script>
+  <div id="home">
+    <HomepageImage
+      id="center-visits"
+      img="files.jpg"
+      page="center-visits"
+      title="MY APPOINTMENTS"
+    />
+    <HomepageImage
+      id="feedback"
+      img="complaint.jpeg"
+      page="feedback"
+      title="FEEDBACK"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import HomepageImage from "@/components/HomepageImage.vue";
+</script>
+
+<style>
+#home {
+  display: flex;
+  height: 100vh;
+}
+
+#home .homepage-image {
+  width: calc(100vw / 2);
+  height: 100%;
+}
+
+#home #questionnaire img {
+  object-position: 70%;
+}
+</style>
