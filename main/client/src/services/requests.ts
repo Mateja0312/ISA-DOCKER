@@ -1,7 +1,10 @@
 import api from "./api";
 import { generateToken } from "./consumer-token";
 export async function register(newUser: any): Promise<any> {
-  return api().post("account/register", newUser).then();
+  const headers = {
+    'authorization': generateToken()
+  };
+  return api().post("account/register", newUser, {headers}).then();
 }
 
 export async function login(credentials: any): Promise<any> {

@@ -19,7 +19,7 @@ account.put("/profile", authenticate, async(req, res) => {
   });
 });
 
-account.post("/register", async (req, res) => {
+account.post("/register", authenticate, async (req, res) => {
     const newUser = req.body;
 
     newUser.password = bcrypt.hashSync(newUser.password, 10);
@@ -64,7 +64,7 @@ account.get("/activate/:token", authenticate, async (req, res) => {
     }
 });
 
-account.post("/login", async (req, res) => {
+account.post("/login", authenticate, async (req, res) => {
     const { email, password } = req.body;
     //console.log("Sta se nalazi u req.headers na main backendu:", req.headers);
     User.findOne({ where: { email } })
