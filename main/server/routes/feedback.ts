@@ -10,8 +10,16 @@ import { authenticate } from '../services/auth-consumer';
 export const feedback = Router();
 
 feedback.get("/interactions", authenticate, async (req, res) => {
-    const { token } = req.query;
-    const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
+  var token: any;
+  var id: any;
+  if(req.headers.authorization) {
+    token = req.headers.authorization;
+    id = req.headers.id
+  }
+  else {
+    token = req.query.token;
+    id = (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number }).id;
+  }
     try {
       let content : any = await Appointment.findAll({
         include: { all: true },
@@ -40,7 +48,7 @@ feedback.get("/interactions", authenticate, async (req, res) => {
   
 });
 
-feedback.get("/response-history", authenticate, async (req, res) => {
+feedback.get("/response-history", async (req, res) => {
     const { token } = req.query;
     const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
     let responses = await FeedbackResponse.findAll({
@@ -52,7 +60,7 @@ feedback.get("/response-history", authenticate, async (req, res) => {
     res.json(responses);
 });
 
-feedback.get("/waiting-response", authenticate, async (req, res) => {
+feedback.get("/waiting-response", async (req, res) => {
     let feedbackList : any = await Feedback.findAll({
       include: [FeedbackResponse],
     })
@@ -63,7 +71,7 @@ feedback.get("/waiting-response", authenticate, async (req, res) => {
     res.json(feedbackList);
 });
 
-feedback.get("/response/:id", authenticate, async (req, res) => {
+feedback.get("/response/:id", async (req, res) => {
     let response: any = await FeedbackResponse.findOne({
       include: [Feedback],
       where: {
@@ -74,19 +82,27 @@ feedback.get("/response/:id", authenticate, async (req, res) => {
 });
 
 feedback.get("/history", authenticate, async (req, res) => {
-    const { token } = req.query;
-    const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
+  var token: any;
+  var id: any;
+  if(req.headers.authorization) {
+    token = req.headers.authorization;
+    id = req.headers.id
+  }
+  else {
+    token = req.query.token;
+    id = (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number }).id;
+  }
 
     let myFeedbacks = await Feedback.findAll();
     myFeedbacks = myFeedbacks.map((f:any) => {
       return f.get({plain: true})
     });
-    myFeedbacks = myFeedbacks.filter((f:any) => f.client_id == userId)
+    myFeedbacks = myFeedbacks.filter((f:any) => f.client_id == id)
 
     res.json(myFeedbacks);
 });
 
-feedback.post("/response", authenticate, async(req, res) => {
+feedback.post("/response", async(req, res) => {
     const { token } = req.query;
     const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -125,9 +141,22 @@ feedback.post("/response", authenticate, async(req, res) => {
 });
 
 feedback.post("", authenticate, async(req, res) => {
-    const { token } = req.query;
-    const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
+  var token: any;
+  var id: any;
+  var role: any;
+  if(req.headers.authorization) {
+    token = req.headers.authorization;
+    id = req.headers.id;
+    role = req.headers.role;
+  }
+  else {
+    token = req.query.token;
+    id = (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number }).id;
+    role = (jwt.verify(token as string, process.env.JWT_SECRET as string) as { role: Enumerator }).role;
+  }
 
+    console.log("id nakon provere izvora requesta:", id);
+    console.log("role nakon provere izvora requesta:", role);
     if(role !== 'client') {
       res.status(401).json({message: 'Unauthorized'});
       return;
@@ -145,7 +174,7 @@ feedback.post("", authenticate, async(req, res) => {
     })
 });
 
-  feedback.get("/:id", authenticate, async (req, res) => {
+  feedback.get("/:id", async (req, res) => {
       let feedback = await Feedback.findOne({
         where: {
           id: req.params.id,

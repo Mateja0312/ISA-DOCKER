@@ -56,7 +56,7 @@ async function isTimeslotFree(center_id: number, client_id: number, start: strin
     return true;
 }
 
-center.get("/list", authenticate, async (req, res) => {
+center.get("/list", async (req, res) => {
     const { name, address, rating, datetime, token } = req.query;
     const id = token ? (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number })['id'] : null;
   
@@ -104,7 +104,7 @@ center.get("/list", authenticate, async (req, res) => {
     }
 });
 
-center.get("/:id", authenticate, async (req, res) => {
+center.get("/:id", async (req, res) => {
     const { id } = req.params;
     const { token } = req.query;
 

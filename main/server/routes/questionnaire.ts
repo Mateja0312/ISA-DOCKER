@@ -5,7 +5,7 @@ import { authenticate } from '../services/auth-consumer';
 
 export const questionnaire = Router();
 
-questionnaire.get("/questions", authenticate, async (req, res) => { 
+questionnaire.get("/questions", async (req, res) => { 
       res.json(questions)
   });
 
@@ -21,7 +21,7 @@ questionnaire.get("", async (req, res) => {
     }
 });
 
-questionnaire.post("", authenticate, async(req, res) => {
+questionnaire.post("", async(req, res) => {
     const { token } = req.query;
     const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
   

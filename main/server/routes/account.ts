@@ -9,7 +9,7 @@ import { authenticate } from '../services/auth-consumer';
 
 export const account = Router();
 
-account.put("/profile", authenticate, async(req, res) => {
+account.put("/profile", async(req, res) => {
   console.log("ALO BRE");
   console.log("Sta se nalazi u req.headers na main backendu (API req za profil):", req.headers.authorization);
   User.update(req.body, {
@@ -17,6 +17,7 @@ account.put("/profile", authenticate, async(req, res) => {
       id: req.body.id
     }
   });
+  authenticate;
 });
 
 account.post("/register", async (req, res) => {

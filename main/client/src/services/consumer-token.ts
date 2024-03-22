@@ -1,3 +1,5 @@
+//visak, treba obrisati
+
 import jwt from 'jsonwebtoken';
 
 const secretKey = 'my-32-character-ultra-secure-and-ultra-long-secret';

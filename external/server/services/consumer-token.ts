@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-const secretKey = 'my-32-character-ultra-secure-and-ultra-long-secret';
-
 export const generateToken = () => {
     const payload = {
-      appId: "agentska-aplikacija",
+      appId: process.env.APP_ID as string
     };
-    return jwt.sign(payload, secretKey);
+    console.log("APP_ID:", process.env.APP_ID as string);
+    console.log("JWT_SECRET:", process.env.JWT_SECRET as string);
+    return jwt.sign(payload, process.env.MAIN_APP_SECRET as string);
 };

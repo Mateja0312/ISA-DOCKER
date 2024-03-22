@@ -153,8 +153,19 @@ function sendQRcode(appointment: any, email: string){
 }
 
 appointment.get("/visits", authenticate, async (req, res) => {
-  const { token } = req.query;
-  const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
+  var token: any;
+  var id: any;
+  if(req.headers.authorization) {
+    token = req.headers.authorization;
+    id = req.headers.id
+  }
+  else {
+    token = req.query.token;
+    id = (jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number }).id;
+  }
+
+  //const { id } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
+  console.log("id nakon provere izvora requesta:", id);
   let responses = await Appointment.findAll({
     include: [Center],
     where: {
@@ -169,7 +180,7 @@ appointment.get("/visits", authenticate, async (req, res) => {
   res.json(responses);
 });
 
-appointment.get("/:id", authenticate, async (req, res) => {
+appointment.get("/:id", async (req, res) => {
   const { token } = req.query;
   const { id, role } = jwt.verify(token as string, process.env.JWT_SECRET as string) as User;
 
@@ -186,7 +197,7 @@ appointment.get("/:id", authenticate, async (req, res) => {
   res.json(appointment);
 });
 
-appointment.post("", authenticate, async(req, res) => {
+appointment.post("", async(req, res) => {
   const newAppointment = req.body;
   const sender = jwt.verify(newAppointment.token, process.env.JWT_SECRET as string) as User;
   const { id, role, employedAt } = sender;
@@ -248,7 +259,7 @@ appointment.post("", authenticate, async(req, res) => {
   
 });
 
-appointment.post("/:id", authenticate, async(req, res) => {
+appointment.post("/:id", async(req, res) => {
   const id = req.params.id;
   const { token } = req.query;
   const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
@@ -286,7 +297,7 @@ appointment.post("/:id", authenticate, async(req, res) => {
   })
 });
 
-appointment.delete("/:id", authenticate, async(req, res) => {
+appointment.delete("/:id", async(req, res) => {
   const { id } = req.params;
   const { token } = req.query;
   const { id: userId } = jwt.verify(token as string, process.env.JWT_SECRET as string) as { id: number };
